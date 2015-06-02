@@ -69,10 +69,25 @@ $(function() {
 
 /**
  * Adds marker for place to map.
+ * https://developers.google.com/maps/documentation/javascript/markers
  */
 function addMarker(place)
 {
-    // TODO
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(parseFloat(place.latitude), parseFloat(place.longitude));
+        var mapOptions = {
+            zoom: 4,
+            center: myLatlng
+        }
+        var map = new google.maps.Map(document.getElementById('map-canvas').mapOptions);
+        
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Hello World!'
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
 }
 
 /**
@@ -106,7 +121,7 @@ function configure()
         source: search,
         templates: {
             empty: "no places found yet",
-            suggestion: _.template("<p>TODO</p>")
+            suggestion: _.template("<p><%- place_name %>, <%- admin_name1 %></p>")
         }
     });
 
